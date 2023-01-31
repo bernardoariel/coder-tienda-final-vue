@@ -115,7 +115,7 @@ const errorCurso = ref(false)
                 if(data.categoria=='backend'){
                     toogleFrontend.value= false
                 }
-                console.log('toogleFrontend.value::: ', toogleFrontend.value);
+                // console.log('toogleFrontend.value::: ', toogleFrontend.value);
                 curso.value = {
                     id:data.id,
                     nombre:data.nombre,
@@ -144,7 +144,7 @@ const errorCurso = ref(false)
            
             isLoading.value = true
             curso.value.categoria = (toogleFrontend.value)?'frontend':'backend'
-            console.log('curso.value::: ', curso.value);
+            // console.log('curso.value::: ', curso.value);
             let respuesta = await mockApi.put(`/productos/${params.id}`,curso.value)
            
             isLoading.value = false

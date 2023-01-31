@@ -20,7 +20,7 @@ let login = async () => {
     if (user) {
         
         localStorage.setItem('user', JSON.stringify({ email: user.email }))
-        console.log('user.email::: ', user.email);
+        // console.log('user.email::: ', user.email);
         /* store */
        const usuarioStore = useUsuarioStore();
         const {agregarUsuario} = usuarioStore

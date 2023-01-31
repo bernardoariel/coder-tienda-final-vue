@@ -12,7 +12,7 @@ export const useCarritoStore = defineStore('carrito', () => {
       return;
     }
     cursoStore.value.push(curso);
-    console.log('cursoStore.value::: ', cursoStore.value);
+    // console.log('cursoStore.value::: ', cursoStore.value);
   };
   let borrarCarrito = () =>{
     cursoStore.value=[]

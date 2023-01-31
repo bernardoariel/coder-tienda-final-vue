@@ -1,0 +1,1 @@
+import{u as s,f as t,o as a,c as u}from"./index-c3973217.js";const p={__name:"SalirComponent",setup(c){const e=s(),o=t(),{borrarUsuario:r,existeUsuario:n}=o;return r(),localStorage.removeItem("user"),e.push({name:"defaultUser"}),(i,m)=>(a(),u("div"))}};export{p as default};

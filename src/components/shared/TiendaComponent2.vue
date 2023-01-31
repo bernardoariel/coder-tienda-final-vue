@@ -7,7 +7,7 @@ const props = defineProps({
     titulo:String
 });
 const navegar = (id) =>{
-    console.log('id::: ', id);
+    // console.log('id::: ', id);
     
     route.push({path:`/producto/${id}`})
 }

@@ -63,7 +63,7 @@ const {cargarUser} = useLoginStore();
 const usuarioStore = useUsuarioStore();
 const {existeUsuario} = usuarioStore;
 const {email,tipo,foto,nombre} = storeToRefs(usuarioStore)        
-console.log('tipo::: ', tipo);
+// console.log('tipo::: ', tipo);
 
 const carritoStore = useCarritoStore();
 
@@ -76,7 +76,7 @@ onMounted(async () => {
 
         const {data} = await mockApi.get(`/productos/${param}`)
         producto.value = data
-        console.log('producto.value::: ', producto.value);
+        // console.log('producto.value::: ', producto.value);
         if(!data){
             route.push({ path: '/tienda' })
         }
@@ -92,7 +92,7 @@ onMounted(async () => {
 })
 const navegar = (id) =>{
 
-    console.log('est')
+    // console.log('est')
     if(!path.includes('otro')){
 
         route.push({path:`/producto/otro/${id}`})

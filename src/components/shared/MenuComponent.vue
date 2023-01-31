@@ -101,17 +101,17 @@ const pagar = async () =>{
 	// console.log('data::: ', data);
 	
 	cursos.value.forEach(async(curso, index) => {
-		console.log('curso::: ', curso.id);
+		// console.log('curso::: ', curso.id);
 	
 		
  		/* usuarios */
 		const {data:datauser} = await mockApiUsuarios.get('/usuarios')
 		let usuario = datauser.find(item => item.email == usuarioStore.email);
-		console.log('usuario::: ', usuario);
+		// console.log('usuario::: ', usuario);
 
 		let cursoExistente = data.find(item => item.idcliente===usuario.id && item.idcurso==curso.id);
 
-		console.log('cursoExistente::: ', cursoExistente);
+		// console.log('cursoExistente::: ', cursoExistente);
 		if(!cursoExistente){
 
 			let pago = {

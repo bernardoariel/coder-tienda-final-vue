@@ -73,7 +73,7 @@ import router from '../router';
     const usuarioStore = useUsuarioStore();
 
     let eliminarCurso = async(id) =>{
-        console.log('id::: ', id);
+        // console.log('id::: ', id);
         let respuesta = await mockApi.delete(`/compras/${id}`)
         cargarGrilla()
         

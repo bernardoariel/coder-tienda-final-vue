@@ -49,10 +49,10 @@ onMounted(async () => {
 let confirmDeleteProduct = async(id)=>{
    
     let respuesta = await mockApi.delete(`/${props.datos}/${id}`)
-    console.log('respuesta::: ', respuesta);
+    // console.log('respuesta::: ', respuesta);
 }
 let editProduct = async(id)=>{
-    console.log('id::: ', id);
+    // console.log('id::: ', id);
     
     router.push({path:`/editarusuario/${id}`})
 }
