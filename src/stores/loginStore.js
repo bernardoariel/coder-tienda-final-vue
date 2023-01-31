@@ -9,7 +9,7 @@ export const useLoginStore = defineStore('login', () => {
     
     let cargarUser = async (usuario) => {
         const {data} = await mockApi.get('/usuarios')
-        console.log('data::: ', data);
+        // console.log('data::: ', data);
         // const { data } = await getUsuario();
         const user = data.find(user => user.email === usuario );
 

@@ -6,7 +6,7 @@ export default {
           path: 'default',
           name: 'defaultadmin',
           component: () => import('@/modulos/admin/pages/DefaultPage.vue')
-        },
+        }
         
       ]
 

@@ -11,7 +11,7 @@ export const useUsuarioStore = defineStore('usuario', () => {
 
   
   let agregarUsuario = (user)=>{
-    console.log('estoy en el store', user)
+    // console.log('estoy en el store', user)
     email.value = user.email
     tipo.value = (user.tipousuario)?'admin':'cliente'
     foto.value = user.image
@@ -30,7 +30,7 @@ export const useUsuarioStore = defineStore('usuario', () => {
       let parsedUser = JSON.parse(user);
       const {cargarUser} = useLoginStore();
       cargarUser(parsedUser.email)
-      console.log('parsedUser::: ', parsedUser);
+      // console.log('parsedUser::: ', parsedUser);
       return parsedUser.email
     } else {
       console.log('No hay usuario guardado en el localStorage');

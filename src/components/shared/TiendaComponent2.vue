@@ -11,6 +11,7 @@ const navegar = (id) =>{
     
     route.push({path:`/producto/${id}`})
 }
+
 </script>
 <template>
     <div class="flex justify-content-start flex-wrap">

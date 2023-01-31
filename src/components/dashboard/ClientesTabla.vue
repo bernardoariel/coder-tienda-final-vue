@@ -43,7 +43,7 @@ let datos = ref([])
 onMounted(async () => {
     
     const {data} = await mockApi.get(`/${props.datos}`)
-    console.log('data::: ', data); 
+    // console.log('data::: ', data); 
     datos.value = data.filter(item => item.id !== "1");
 })
 let confirmDeleteProduct = async(id)=>{

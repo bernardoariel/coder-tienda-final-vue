@@ -19,6 +19,7 @@ onMounted(async () => {
 
     <!-- <TiendaComponent :productos="productosFrontend" titulo="Cursos de Frontend"/> -->
     <TiendaComponent2 :productos="productosFrontend" titulo="Cursos de Frontend"/>
+    <TiendaComponent2 :productos="productosBackend" titulo="Cursos de Frontend"/>
     
 
   </div>

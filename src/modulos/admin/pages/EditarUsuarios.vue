@@ -81,7 +81,7 @@ onMounted(async () => {
     
     console.log('${param.id}::: ', params.id);
     const {data} = await mockApi.get(`/usuarios/${params.id}`)
-    console.log('data::: ', data);
+    // console.log('data::: ', data);
     nombre.value = data.nombre
     email.value = data.email
     password.value = data.password

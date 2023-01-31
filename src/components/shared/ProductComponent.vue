@@ -1,24 +1,40 @@
 <template>
+    <div class="flex justify-content-center w-full">
+        <div class="flex flex-column  surface-card p-4 shadow-2 border-round w-4 m-4">
+            <div class="flex justify-content-center text-3xl font-medium text-900 mb-3">{{producto.nombre}}</div>
+            <div class="flex justify-content-center font-medium text-500 mb-3">{{producto.descripcion}}</div>
+           
+          
+            <hr>
+            
+            <div class="flex justify-content-center font-medium text-500 mb-3">$ {{producto.precio}}</div>
+ 
+            <div class="flex justify-content-center">
+                <img :src="producto.foto" heigth="250" width="250" />
+            </div>
+            <!-- <Image :src="producto.foto"/> -->
+           <div class="flex justify-content-center mt-3">
+            <Button v-if="usuarioStore.tipo=='cliente'" 
+                label="Seleccionar" class="flex justify-content-center p-button-success" 
+                @click="agregarCurso(producto)"></Button>
+            <Button v-if="usuarioStore.tipo=='admin'" label="Editar" 
+            class="p-button-danger" @click="editar(producto.id)"></Button>
+           </div>
+           
 
-    <div class="surface-card p-4 shadow-2 border-round w-10 m-4">
-        <div class="text-3xl font-medium text-900 mb-3">{{producto.nombre}}</div>
-        <div class="font-medium text-500 mb-3">{{producto.descripcion}}</div>
-        
-        <Image :src="producto.foto"/>
-        <Button v-if="existeUsuario()" 
-            label="Seleccionar" class="p-button-success" 
-            @click="agregarCurso(producto)"></Button>
-        <Button v-if="tipo" label="Editar" 
-        class="p-button-danger" @click="editar(producto.id)"></Button>
-
+        </div>
     </div>
+    
     <div class="flex">
-    <div class="surface-card p-4 shadow-2 border-round w-3 m-4" 
+    <div class=" flex flex-column surface-card p-4 shadow-2 border-round w-3 m-4" 
         v-for="curso of cursos" :key="producto.id">
         
-        <Image :src="curso.foto" width="250"/>
-        <div class="text-3xl font-medium text-900 mb-3">{{curso.nombre}}</div>
-        <div class="font-medium text-500 mb-3">{{curso.descripcion}}</div>
+        <!-- <Image :src="curso.foto" h/> -->
+        <div class="flex justify-content-center">
+        <img :src="curso.foto" heigth="150" width="150">
+        </div>
+        <div class="text-3xl font-medium text-900 mb-3 flex justify-content-center">{{curso.nombre}}</div>
+        <div class="font-medium text-500 mb-3 flex justify-content-center">{{curso.descripcion}}</div>
         <Button label="Chusmear el curso" @click="navegar(curso.id)"
          class="p-3 w-full p-button-outlined"></Button>    
     

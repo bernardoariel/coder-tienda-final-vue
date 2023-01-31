@@ -11,7 +11,7 @@
                     <Column :exportable="false" header="Accion" >
                         <template #body="slotProps">
                             
-                            <Button icon="pi pi-trash" class="p-button-rounded p-button-warning" @click="" />
+                            <Button icon="pi pi-trash" class="p-button-rounded p-button-warning" @click="eliminarCurso(slotProps.data.id)" />
                         </template>
                     </Column>
   
@@ -19,9 +19,9 @@
            
             </div>
             
-            <div class="col-6">
+            <div class="col-6" v-if="sumaPrecios!=0">
                
-                <h1>Total a Pagar: ${{ 50000 }}</h1>
+                <h1>Total a Pagar: ${{ sumaPrecios }}</h1>
                 <h3 v-if="errorCurso" class="text-red-500">Falta completar algunos campos</h3>
                 
                 <div class="col-4">
@@ -49,7 +49,7 @@
             </div>
             
         </div>
-       <!--  <div v-else>
+     <!--   <div v-else class="flex justify-content-center">
             <h2 class="m-5">No hay items en el carrito</h2>
         </div> -->
         
@@ -57,22 +57,41 @@
 
 <script setup>
 
-    import { ref, onMounted,computed, watch  } from 'vue';
-    import mockApi from "@/api/mockapiApiCompras"
-
+import { ref, onMounted,computed, watch  } from 'vue';
+import mockApi from "@/api/mockapiApiCompras"
+import mockApiUsuarios from "@/api/mockapiApi"
+import { useUsuarioStore } from '../stores/usuarioStore';
+import router from '../router';
+    
     let tarjeta = ref('')
     let vencimiento = ref('')
     let codigo = ref('')
     let errorCurso = ref(false)
     let cursos = ref([])
-    
+    let sumaPrecios  = ref(0)
+    /* store */
+    const usuarioStore = useUsuarioStore();
+
+    let eliminarCurso = async(id) =>{
+        console.log('id::: ', id);
+        let respuesta = await mockApi.delete(`/compras/${id}`)
+        cargarGrilla()
+        
+    }
+    let cargarGrilla = async() =>{
+        const {data:datauser} = await mockApiUsuarios.get('/usuarios')
+	let usuario = datauser.find(item => item.email == usuarioStore.email);
+        let {data} = await mockApi.get(`/compras/`)
+        cursos.value = data.filter(carrito =>  carrito.idcliente===usuario.id && carrito.pagado==false)
+        sumaPrecios = cursos.value.reduce((total, carrito) => total + parseFloat(carrito.precio), 0)
+    }
 onMounted(async () => {
 
 try{
-
-    let {data} = await mockApi.get(`/compras/`)
-    cursos.value = data.filter(carrito =>  carrito.idcliente===2 && carrito.pagado==false)
     
+
+    cargarGrilla()
+
 }catch(error){
 
     console.log('error::: ', error);
@@ -81,18 +100,20 @@ try{
 
 
 })
-const pagar = () =>{
-    cursos.value.forEach(async(curso, index) => {
-        
+const pagar = async () => {
+    const promises = cursos.value.map(async (curso, index) => {
         let compra = {
             ...curso,
             pagado: true,
         }
 
         await mockApi.put(`/compras/${curso.id}`,compra)
-		cursos.value =[]
-	});
-}  
+    });
+    await Promise.all(promises);
+    cursos.value = [];
+    router.push({path:'/default'})
+};
+
 
 const isFormValid = computed(() => {
     return (
@@ -110,10 +131,10 @@ const validateForm = () => {
         pagar()
     }
 };
-watch(cursos, (newValue, oldValue) => {
+/* watch(cursos, (newValue, oldValue) => {
   console.log(`Valor antiguo de cursos: ${oldValue}`);
   console.log(`Nuevo valor de cursos: ${newValue}`);
-});
+}); */
 </script>
 
 <style lang="scss" scoped>

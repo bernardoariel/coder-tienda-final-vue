@@ -5,26 +5,28 @@ import { useRouter } from "vue-router"
 import { useCarritoStore } from '../../stores/carritoStore';
 import { useUsuarioStore } from '../../stores/usuarioStore';
 import mockApi from "@/api/mockapiApiCompras"
+import mockApiUsuarios from "@/api/mockapiApi"
 
 /* store */
 const usuarioStore = useUsuarioStore();
-const {existeUsuario} = usuarioStore;
-const {email,tipo,foto,nombre} = storeToRefs(usuarioStore)
+
+// const {email,tipo,foto,nombre} = storeToRefs(usuarioStore)
 
 
-existeUsuario()
+// existeUsuario()
 const carritoStore = useCarritoStore();
 const { cursoStore } = storeToRefs(carritoStore)
 const cursos = computed(() => cursoStore.value);
 
 
 const cursosCantidad = computed(() => cursoStore.value.length);
-console.log('cursoStore::: ', cursoStore);
+// console.log('cursoStore::: ', cursoStore);
 
 const op = ref();
 const route = useRouter()
 let items = ref([])
-let visitante = [
+let splitButtonMenu = ref([])
+let linkTodos = [
 				{
 					label:'Home',
 					icon:'pi pi-fw pi-file',
@@ -41,37 +43,44 @@ let visitante = [
 					}
 				}
 		    ]
-			console.log('tipo::: ', tipo);
-if(tipo.value=='admin'){
-	visitante.push(
-		{
-					label:'Dashboard',
-					path:'dashboard/default',
-					command: () => {
-						route.push({path:'/dashboard/default'})
-					}
-				}
-	)
-	
-	items.value= visitante
-}
-items.value = visitante
-let splitButtonMenu =[
+let linkAdmin = [
 	{
-		label: 'Cambiar Contraseña',
+		label:'Dashboard',
+		path:'dashboard/default',
+		command: () => {
+			route.push({path:'/dashboard/default'})
+		}
+	}
+]		
+let linksplit =[
+	{
+		label: 'Carrito de Compras',
 		icon: 'pi pi-edit',
 		command: () => {
-			console.log('cambiar contraseña')
+			route.push({name:'carrito'})
 		}
-	},
+	}
+	
+]
+let linkSalir = [
 	{
 		label: 'Salir',
 		icon: 'pi pi-times',
 		command: () => {
 			route.push({name:'salir'})
 		}
-	},
+	}
 ]
+
+if(usuarioStore.tipo=='admin'){
+
+	items.value = linkTodos.concat(linkAdmin);
+	splitButtonMenu.value = linkSalir
+}else{
+	splitButtonMenu.value = linksplit.concat(linkSalir)
+	items.value = linkTodos
+}
+
 
 const toggle = (event) => {
 	
@@ -82,25 +91,31 @@ const toggle = (event) => {
 
 const moverme = (ruta) =>{
 	
-	console.log('ingrese::: ');
+	
 	route.push({name:ruta})
 }
 
 const pagar = async () =>{
 
 	let {data} = await mockApi.get(`/compras/`)
-	console.log('data::: ', data);
+	// console.log('data::: ', data);
 	
 	cursos.value.forEach(async(curso, index) => {
 		console.log('curso::: ', curso.id);
-		//! aca lo tengo que tomar del cliente que esta comprando
-		let cursoExistente = data.find(item => item.idcliente===2 && item.idcurso==curso.id);
+	
+		
+ 		/* usuarios */
+		const {data:datauser} = await mockApiUsuarios.get('/usuarios')
+		let usuario = datauser.find(item => item.email == usuarioStore.email);
+		console.log('usuario::: ', usuario);
+
+		let cursoExistente = data.find(item => item.idcliente===usuario.id && item.idcurso==curso.id);
 
 		console.log('cursoExistente::: ', cursoExistente);
 		if(!cursoExistente){
 
 			let pago = {
-				idcliente:2,
+				idcliente:usuario.id,
 				idcurso:curso.id,
 				nombrecurso:curso.nombre,
 				precio:curso.precio,
@@ -129,18 +144,19 @@ const pagar = async () =>{
 			<template #end>
 				<div class="flex">
 					
-					<Button v-if="cursosCantidad>=1" type="button" icon="pi pi-cart-plus" @click="toggle" class="mr-3 p-button p-component p-button-rounded p-button-warning" />
-					<Button v-if="!nombre" label="Ingresar" 
+					<Button v-if="cursosCantidad>=1" type="button" icon="pi pi-cart-plus" @click="toggle"
+					 class="mr-3 p-button p-component p-button-rounded p-button-warning" />
+					<Button v-if="!usuarioStore.nombre" label="Ingresar" 
 					class="p-button-outlined p-button-secondary" @click="moverme('login')" icon="pi pi-user" />
 
 					
 					<template v-else>
-						<SplitButton :label="nombre" 
+						<SplitButton :label="usuarioStore.nombre" 
 						:model="splitButtonMenu" 
 						class="p-button-secondary p-splitbutton-defaultbutton">
 						</SplitButton>
 					
-						<Avatar  :image="foto" class="ml-5 mr-2"  shape="circle" />
+						<Avatar  :image="usuarioStore.foto" class="ml-5 mr-2"  shape="circle" />
 					</template>
 					<OverlayPanel ref="op">
 
