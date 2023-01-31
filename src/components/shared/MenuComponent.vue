@@ -1,11 +1,11 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import { reactive, computed, ref } from 'vue';
+import { reactive, computed, ref, nextTick} from 'vue';
 import { useRouter } from "vue-router"
-import router from "../../router";
 import { useCarritoStore } from '../../stores/carritoStore';
 import { useUsuarioStore } from '../../stores/usuarioStore';
 import mockApi from "@/api/mockapiApiCompras"
+
 /* store */
 const usuarioStore = useUsuarioStore();
 const {existeUsuario} = usuarioStore;
@@ -23,8 +23,8 @@ console.log('cursoStore::: ', cursoStore);
 
 const op = ref();
 const route = useRouter()
-
-let items = [
+let items = ref([])
+let visitante = [
 				{
 					label:'Home',
 					icon:'pi pi-fw pi-file',
@@ -41,7 +41,21 @@ let items = [
 					}
 				}
 		    ]
-
+			console.log('tipo::: ', tipo);
+if(tipo.value=='admin'){
+	visitante.push(
+		{
+					label:'Dashboard',
+					path:'dashboard/default',
+					command: () => {
+						route.push({path:'/dashboard/default'})
+					}
+				}
+	)
+	
+	items.value= visitante
+}
+items.value = visitante
 let splitButtonMenu =[
 	{
 		label: 'Cambiar Contraseña',

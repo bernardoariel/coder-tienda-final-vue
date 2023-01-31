@@ -49,8 +49,15 @@
              <div class="col-6">
                  <InputText type="text" v-model="curso.precio" placeholder="Ingrese la url de la foto del curso" class="w-10"/>
              </div>
-             <Button label="Eliminar este Curso" class="p-button p-component p-button-raised p-button-danger" icon="pi pi-trash" :loading="isLoadingDel" @click="eliminar()"/>
-             <Button label="Guardar"  icon="pi pi-check" :loading="isLoading" @click="validateForm()"/>
+             <div class="col-6">
+                <Button label="Cancelar" class="w-full p-button-secondary" icon="pi pi-fast-backward"  @click="salir()"/>
+             </div>
+             <div class="col-6">
+                <Button label="Guardar"  class="w-full" icon="pi pi-check" :loading="isLoading" @click="validateForm()"/>
+             </div>
+
+             
+             <!-- <Button label="Eliminar este Curso" class="p-button p-component p-button-raised p-button-danger" icon="pi pi-trash" :loading="isLoadingDel" @click="eliminar()"/> -->
              
              </div>
          </form>
@@ -82,12 +89,7 @@ const errorCurso = ref(false)
     
     /* curso */
     let curso = ref({
-        id:0,
-        nombre:'',
-        categoria:'frontend',
-        categoria:(toogleFrontend)?'frontend':'backend',
-        foto:'',
-        precio:0,
+        
     })
     const nombreCurso = ref('')
     const descripcionCurso = ref('') 
@@ -107,6 +109,13 @@ const errorCurso = ref(false)
             if (!data) {
                 router.push({ path: '/tienda' });
             } else {
+
+                // if(toogleFrontend.value) toogleFrontend.value = !toogleFrontend.valueif
+                
+                if(data.categoria=='backend'){
+                    toogleFrontend.value= false
+                }
+                console.log('toogleFrontend.value::: ', toogleFrontend.value);
                 curso.value = {
                     id:data.id,
                     nombre:data.nombre,
@@ -132,13 +141,15 @@ const errorCurso = ref(false)
     let guardar = async() =>{
        
         try {
-          
            
             isLoading.value = true
+            curso.value.categoria = (toogleFrontend.value)?'frontend':'backend'
+            console.log('curso.value::: ', curso.value);
             let respuesta = await mockApi.put(`/productos/${params.id}`,curso.value)
-            console.log('respuesta::: ', respuesta);
+           
             isLoading.value = false
-            router.push({path:'/tienda'})
+            // router.push({path:'/tienda'})
+            router.push({path:'/dashboard/default'}) 
 
         }catch(error){
 
@@ -146,6 +157,10 @@ const errorCurso = ref(false)
             
 
         }
+    }
+
+    let salir =()=>{
+        router.push({path:'/dashboard/default'})
     }
 
     const isFormValid = computed(() => {

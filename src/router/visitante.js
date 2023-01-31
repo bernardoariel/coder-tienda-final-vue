@@ -1,5 +1,5 @@
 export default {
-    name: 'usuarionologueado',
+    name: '',
     component: () => import('@/modulos/users/layouts/UserLayout.vue'),
       children: [
         {
@@ -33,6 +33,21 @@ export default {
           path: 'carrito',
           name:'carrito',
           component: () => import('@/views/CarritoView.vue')
+        },
+        {
+          path: '/editarusuario/:id',
+          name: 'editarusuario',
+          component: () => import('../modulos/admin/pages/EditarUsuarios.vue')
+        },
+        {
+          path: '/nuevousuario',
+          name: 'nuevousuario',
+          component: () => import('../modulos/admin/pages/NuevoUsuario.vue')
+        },
+        {
+          path:'/salir',
+          name:'salir',
+          component: () => import('@/components/shared/SalirComponent.vue')
         },
         {
           path:'',

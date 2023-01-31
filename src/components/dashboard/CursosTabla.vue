@@ -2,7 +2,7 @@
     <Panel :header="props.titulo" class="w-5 m-5" :toggleable="true" >
         <DataTable :value="datos" responsiveLayout="scroll"  :paginator="true" :rows="3">
             <Column field="nombre" header="Nombre"></Column>
-            <Column field="tipo" header="Tipo"></Column>
+            <Column field="categoria" header="Tipo"></Column>
             <Column header="Image">
                 <template #body="slotProps">
                     <img :src="slotProps.data.foto" width="100" :alt="slotProps.data.foto" class="product-image" />

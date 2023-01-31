@@ -4,9 +4,13 @@ import { useUsuarioStore } from "../../stores/usuarioStore";
 
 const route = useRouter()
 const usuarioStore = useUsuarioStore();
-const {borrarUsuario} =usuarioStore
+const {borrarUsuario,existeUsuario} = usuarioStore
 borrarUsuario()
+
 localStorage.removeItem('user');
+
+
+
 
 route.push({name:'defaultUser'})
 </script>

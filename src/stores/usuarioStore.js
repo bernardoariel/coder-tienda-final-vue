@@ -11,8 +11,9 @@ export const useUsuarioStore = defineStore('usuario', () => {
 
   
   let agregarUsuario = (user)=>{
+    console.log('estoy en el store', user)
     email.value = user.email
-    tipo.value = (user.tipo)?'admin':'cliente'
+    tipo.value = (user.tipousuario)?'admin':'cliente'
     foto.value = user.image
     nombre.value = user.nombre
   }

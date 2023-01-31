@@ -54,7 +54,7 @@ let confirmDeleteProduct = async(id)=>{
 let editProduct = async(id)=>{
     console.log('id::: ', id);
     
-    router.push({path:`editarusuario/${id}`})
+    router.push({path:`/editarusuario/${id}`})
 }
 </script>
 

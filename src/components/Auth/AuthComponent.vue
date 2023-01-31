@@ -23,6 +23,7 @@ let login = async () => {
         /* store */
         const usuarioStore = useUsuarioStore();
         const {agregarUsuario} = usuarioStore
+        console.log('user:::1 ', user);
         agregarUsuario(user)
         //enviar layout de admin
         if(user.id===1 || user.tipo == true){

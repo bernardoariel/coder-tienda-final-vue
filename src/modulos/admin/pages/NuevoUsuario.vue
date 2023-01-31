@@ -77,7 +77,7 @@ let imagen = ref('')
 let errorValidacion = ref(false)
 const { params, path } = useRoute();
 const router = useRouter();
-onMounted(async () => {
+/* onMounted(async () => {
     
     console.log('${param.id}::: ', params.id);
     const {data} = await mockApi.get(`/usuarios/${params.id}`)
@@ -88,7 +88,7 @@ onMounted(async () => {
     imagen.value = data.image
     selectedTipo.value =  (data.tipousuario)? 'Admin':'Usuario'
     
-})
+}) */
 
 
 const isFormValid = computed(() => {
@@ -121,7 +121,7 @@ const guardar = async () =>{
  
 
 
-   await mockApi.put(`/usuarios/${params.id}`,usuario)
+   await mockApi.post(`/usuarios`,usuario)
     router.push({path:'/dashboard/default'}) 
 
 }  

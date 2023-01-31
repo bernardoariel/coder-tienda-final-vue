@@ -7,11 +7,7 @@ export default {
           name: 'defaultadmin',
           component: () => import('@/modulos/admin/pages/DefaultPage.vue')
         },
-        {
-          path: '/editarusuario/:id',
-          name: 'editarusuario',
-          component: () => import('../modulos/admin/pages/EditarUsuarios.vue')
-        }
+        
       ]
 
 }

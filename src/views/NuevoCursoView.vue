@@ -9,7 +9,8 @@
                 <label for="nombre" class="mr-5">Curso</label>
             </div>   
 
-            <div class="col-6"><InputText type="text" v-model="curso.nombre"
+            <div class="col-6">
+            <InputText type="text" v-model="curso.nombre"
                 placeholder="Ingrese el nombre del curso" class="w-10"/>
             </div>   
             
@@ -50,8 +51,13 @@
                 <InputText type="text" v-model="curso.precio" placeholder="Ingrese la url de la foto del curso" class="w-10"/>
             </div>
 
-            <Button label="Guardar"  icon="pi pi-check" :loading="isLoading" @click="validateForm()"/>
             
+            <div class="col-6">
+            <Button label="Cancelar" class="w-full p-button-secondary" icon="pi pi-fast-backward"  @click="salir()"/>
+        </div>
+        <div class="col-6">
+            <Button label="Guardar" class="w-full"   icon="pi pi-check" :loading="isLoading" @click="validateForm()"/>
+        </div>    
             </div>
         </form>
    </Panel>
@@ -108,6 +114,8 @@ let guardar = async() =>{
         
         isLoading.value = false
 
+        router.push({path:'/dashboard/default'})
+
     }catch(error){
 
         throw(error)
@@ -132,7 +140,9 @@ const validateForm = () => {
         guardar()
     }
 };
-
+let salir =()=>{
+        router.push({path:'/dashboard/default'})
+    }
 
   
 </script>
